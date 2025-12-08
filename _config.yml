@@ -15,13 +15,13 @@
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "zh-TW"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Site Title"
+title                    : "薪酬洞察筆記"
 title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Your Name"
-description              : "An amazing website."
+subtitle                 : "薪酬調查、數據分析與 HR 策略的實戰分享"
+name                     : "HR 薪酬分析顧問"
+description              : "專注薪酬調查、薪酬平台規劃與 HR 數據分析的心得整理，讓複雜的薪資結構更清晰。"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -113,10 +113,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "HR 薪酬分析顧問"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
+  bio              : "長期參與薪酬調查平台改版、薪酬儀表板與人才盤點模型，擅長將 HR 數據轉為清楚的決策洞察。"
+  location         : "臺北"
   email            :
   links:
     - label: "Email"
