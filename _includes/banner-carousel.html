@@ -1,0 +1,191 @@
+{% assign slides = include.slides | default: page.banner_images %}
+{% if slides and slides.size > 0 %}
+<style>
+  .banner-carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    margin: 1.5rem 0;
+  }
+
+  .banner-carousel__slides {
+    position: relative;
+    width: 100%;
+    height: 360px;
+  }
+
+  .banner-carousel__slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+
+  .banner-carousel__slide.is-active {
+    opacity: 1;
+  }
+
+  .banner-carousel__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+  }
+
+  .banner-carousel__caption {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    color: #fff;
+    max-width: 70%;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+
+  .banner-carousel__controls {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .banner-carousel__button {
+    pointer-events: all;
+    background: rgba(0, 0, 0, 0.38);
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+  }
+
+  .banner-carousel__button:hover,
+  .banner-carousel__button:focus {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .banner-carousel__dots {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .banner-carousel__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .banner-carousel__dot.is-active {
+    background: #fff;
+    transform: scale(1.08);
+  }
+
+  @media (max-width: 768px) {
+    .banner-carousel__slides {
+      height: 260px;
+    }
+
+    .banner-carousel__caption {
+      max-width: 84%;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<div class="banner-carousel" data-interval="{{ include.interval | default: 5000 }}">
+  <div class="banner-carousel__slides">
+    {% for slide in slides %}
+      <div class="banner-carousel__slide{% if forloop.first %} is-active{% endif %}" style="background-image: url('{{ slide.image_path | relative_url }}');">
+        <div class="banner-carousel__overlay"></div>
+        {% if slide.title or slide.alt %}
+        <div class="banner-carousel__caption">
+          <strong>{{ slide.title | default: slide.alt }}</strong>
+          {% if slide.description %}<div>{{ slide.description }}</div>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="banner-carousel__controls">
+    <button class="banner-carousel__button" data-action="prev" aria-label="Previous slide">&#10094;</button>
+    <button class="banner-carousel__button" data-action="next" aria-label="Next slide">&#10095;</button>
+  </div>
+  <div class="banner-carousel__dots">
+    {% for slide in slides %}
+      <button class="banner-carousel__dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  (function () {
+    const carousels = document.querySelectorAll('.banner-carousel');
+    carousels.forEach((carousel) => {
+      const slides = carousel.querySelectorAll('.banner-carousel__slide');
+      if (!slides.length) return;
+
+      const dots = carousel.querySelectorAll('.banner-carousel__dot');
+      const interval = parseInt(carousel.dataset.interval, 10) || 5000;
+      let current = 0;
+      let timer = null;
+
+      const setActive = (index) => {
+        slides[current].classList.remove('is-active');
+        dots[current].classList.remove('is-active');
+        current = index;
+        slides[current].classList.add('is-active');
+        dots[current].classList.add('is-active');
+      };
+
+      const next = () => setActive((current + 1) % slides.length);
+      const prev = () => setActive((current - 1 + slides.length) % slides.length);
+      const restartTimer = () => {
+        clearInterval(timer);
+        timer = setInterval(next, interval);
+      };
+
+      carousel.querySelector('[data-action="next"]').addEventListener('click', () => {
+        next();
+        restartTimer();
+      });
+
+      carousel.querySelector('[data-action="prev"]').addEventListener('click', () => {
+        prev();
+        restartTimer();
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const index = Number(dot.dataset.index);
+          if (!Number.isNaN(index)) {
+            setActive(index);
+            restartTimer();
+          }
+        });
+      });
+
+      timer = setInterval(next, interval);
+    });
+  })();
+</script>
+{% endif %}
