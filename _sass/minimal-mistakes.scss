@@ -35,3 +35,51 @@
 @import "minimal-mistakes/archive";
 @import "minimal-mistakes/sidebar";
 @import "minimal-mistakes/print";
+
+/* Attractions layout */
+.attraction {
+  .attraction__header {
+    margin-bottom: 1.5rem;
+  }
+
+  .attraction__location {
+    color: $muted-text-color;
+  }
+
+  .attraction__meta {
+    margin: 0.25rem 0;
+  }
+
+  .attraction__cover {
+    margin: 1.5rem 0;
+
+    img {
+      border-radius: 8px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    figcaption {
+      color: $muted-text-color;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .attraction__section {
+    margin-bottom: 1.75rem;
+  }
+
+  .attraction__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .attraction__chip {
+    background: $lighter-text-color;
+    color: $text-color;
+    border-radius: 999px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}

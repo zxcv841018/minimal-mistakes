@@ -1,0 +1,83 @@
+---
+layout: single
+---
+<div class="attraction">
+  <header class="attraction__header">
+    <h1 class="attraction__title">{{ page.title }}</h1>
+    {% if page.location %}
+    <p class="attraction__location"><i class="fas fa-map-marker-alt"></i> {{ page.location }}</p>
+    {% endif %}
+    {% if page.recommended_ages %}
+    <p class="attraction__meta"><strong>適合年齡：</strong>{{ page.recommended_ages }}</p>
+    {% endif %}
+    {% if page.hours %}
+    <p class="attraction__meta"><strong>開放時間：</strong>{{ page.hours }}</p>
+    {% endif %}
+    {% if page.ticket %}
+    <p class="attraction__meta"><strong>票價資訊：</strong>{{ page.ticket }}</p>
+    {% endif %}
+  </header>
+
+  {% if page.cover_image %}
+  <figure class="attraction__cover">
+    <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title }}">
+    {% if page.cover_caption %}<figcaption>{{ page.cover_caption }}</figcaption>{% endif %}
+  </figure>
+  {% endif %}
+
+  {% if page.highlights %}
+  <section class="attraction__section">
+    <h2>亮點與玩法</h2>
+    <ul>
+      {% for item in page.highlights %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if page.facilities %}
+  <section class="attraction__section">
+    <h2>親子友善設施</h2>
+    <div class="attraction__chips">
+      {% for item in page.facilities %}
+      <span class="attraction__chip">{{ item }}</span>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="attraction__section">
+    <h2>景點介紹</h2>
+    {{ content }}
+  </section>
+
+  {% if page.transportation %}
+  <section class="attraction__section">
+    <h2>交通方式</h2>
+    <p>{{ page.transportation }}</p>
+  </section>
+  {% endif %}
+
+  {% if page.tips %}
+  <section class="attraction__section">
+    <h2>貼心提醒</h2>
+    <ul>
+      {% for tip in page.tips %}
+      <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if page.website or page.phone or page.address %}
+  <section class="attraction__section">
+    <h2>聯絡資訊</h2>
+    <ul>
+      {% if page.website %}<li><strong>官方網站：</strong><a href="{{ page.website }}" target="_blank" rel="noopener">前往連結</a></li>{% endif %}
+      {% if page.phone %}<li><strong>電話：</strong>{{ page.phone }}</li>{% endif %}
+      {% if page.address %}<li><strong>地址：</strong>{{ page.address }}</li>{% endif %}
+    </ul>
+  </section>
+  {% endif %}
+</div>
